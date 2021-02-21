@@ -10,7 +10,7 @@ const mtgApp = {};
 
 mtgApp.urls = {
   random: 'https://api.scryfall.com/cards/random?q=',
-  named: 'https://api.scryfall.com/cards/named?fuzzy='
+  // named: 'https://api.scryfall.com/cards/named?fuzzy='
 };
 
 /**
@@ -42,11 +42,10 @@ mtgApp.fetchRandomCard = async (type) => {
 };
 
 mtgApp.displayCard = (card) => {
-
   console.log(card);
-}
+};
 
-cardTypes = [
+mtgApp.cardTypes = [
   "Land",
   "Creature",
   "Artifact",
@@ -56,11 +55,10 @@ cardTypes = [
   "Sorcery"
 ];
 
-for (let type of cardTypes) {
+for (let type of mtgApp.cardTypes) {
   mtgApp.fetchRandomCard(type);
-}
+};
 
-// boop
 /* mtgApp.url = new URL ('https://api.scryfall.com/cards/named');
 mtgApp.url.search = new URLSearchParams({
     exact: `island`,
