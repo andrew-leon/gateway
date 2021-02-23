@@ -1,14 +1,33 @@
 const mtgApp = {};
 
 // 1. Query the Scryfall API for one random card of each major type
+mtgApp.instantOrSorcery = () => {
+  const rand =  Math.floor(Math.random());
+  if (rand >= 0.5) {
+    return "Instant";
+  }
+  return "Sorcery";
+};
+
+/**
+ * returns true if a card has exactly one supertype, and it is of the specified type
+ * intended to avoid multiple supertypes, e.g. "Artifact Creature"
+ * @param {string} typeLine a card's full type line
+ * @param {string} type a specific type from the cardTypes array
+ */
+mtgApp.matchesCardType = (typeLine, type) => {
+    const dash = "—";
+    const typeRegex = new RegExp(`^(Legendary )?${type}( ${dash} .+)?$`);
+    return typeRegex.test(typeLine);
+};
+
 mtgApp.cardTypes = [
   "Land",
   "Creature",
   "Artifact",
   "Enchantment",
   "Planeswalker",
-  "Instant",
-  "Sorcery"
+  mtgApp.instantOrSorcery()
 ];
 
 mtgApp.urls = {
@@ -35,7 +54,7 @@ mtgApp.fetchRandomCard = async (type) => {
     })
     .then((card) => {
       // if this card is legal and of the specified type, display it and finish the loop
-      if (card.type_line.includes(type) && card.legalities.commander === "legal") {
+      if (mtgApp.matchesCardType(card.type_line, type) && card.legalities.commander === "legal") {
         mtgApp.displayCard(card);
         finished = true;
       };
