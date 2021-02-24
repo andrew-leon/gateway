@@ -2,65 +2,75 @@
 
 // 2. For the relevant cards (creature & planeswalker) grab additional information to be used in explanation text
 
-// 3. Display cards on page using object url as img src, 
+// 3. Display cards on page using object url as img src,
 //and card name/type as alt text
 
-const mtgApp = {};
+/* LINKS
+Scryfall main page: 
+  https://scryfall.com/
 
-// initializes all data; called in mtgApp.init()
-mtgApp.initData = () => {
+Scryfall API docs: 
+  https://scryfall.com/docs/api
+
+Scryfall API docs for our endpoint: 
+  https://scryfall.com/docs/api/cards/random
+
+Scryfall docs for advanced search syntax
+  https://scryfall.com/docs/syntax
+*/
+
+// the name of the app
+const gateway = {};
+
+// initializes all data; called in gateway.init()
+gateway.initData = () => {
   // array of card types to display
-  mtgApp.cardTypes = [
+  gateway.cardTypes = [
     "Land",
     "Creature",
     "Artifact",
     "Enchantment",
     "Planeswalker",
-    mtgApp.randPick("Instant", "Sorcery")
+    gateway.randPick("Instant", "Sorcery"),
   ];
 
-  // dictionary of card objects, populated at runtime
-  mtgApp.cards = {};
+  // dictionary of card objects; populated at runtime
+  gateway.cards = {};
 
   // API endpoint
-  mtgApp.url = new URL("https://api.scryfall.com/cards/random");
+  gateway.url = new URL("https://api.scryfall.com/cards/random");
 };
 
-// initializes all functions; called in mtgApp.init()
-mtgApp.initFuncs = () => {
-
+// initializes all functions; called in gateway.init()
+gateway.initFuncs = () => {
   /**
-   * @function mtgApp.generateQuery
+   * @function gateway.buildFilterQuery
    * Generates a query string for a given card type (e.g. "Land").
-   * The query string is formatted using the Scryfall API docs
-   * (https://scryfall.com/docs/syntax) to filter in the following ways:
-   * 
+   * The query string is formatted using Scryfall's advanced search syntax 
+   * (see "LINKS" section above) to filter the random card request 
+   * in the following ways:
+   *
    *  - only cards matching the given card type, and no other type
-   *  - no cards with multiple faces 
-   * 
-   * @param {string} type a specified type from mtgApp.cardTypes[]
+   *  - no cards with multiple faces
+   *  - no "funny" cards
+   *
+   * @param {string} type a specified type from gateway.cardTypes[]
    * @return a formated query string
    */
-  mtgApp.generateQuery = (type) => {
-
-    // include only cards with given type
+  gateway.buildFilterQuery = (type) => {
+    // include only cards with given type, e.g. "t:land"
     let query = `t:${type.toLowerCase()} `;
 
-    // exclude all other card types
+    // exclude all other card types, e.g. "-t:creature"
     // (this excludes multiple-type cards)
-    for (let cardType of mtgApp.cardTypes) {
+    for (let cardType of gateway.cardTypes) {
       if (cardType != type) {
         query += `-t:${cardType.toLowerCase()} `;
       }
     }
 
     // a list of types of multi-faced cards
-    const multiFacedTypes = [
-      "split",
-      "flip",
-      "transform",
-      "meld",
-    ];
+    const multiFacedTypes = ["split", "flip", "transform", "meld"];
 
     // exclude all types of multi-faced cards
     for (let cardType of multiFacedTypes) {
@@ -68,45 +78,45 @@ mtgApp.initFuncs = () => {
     }
 
     // exclude funny cards
-    query += `-is:funny`;
+    query += `-is:funny `;
 
     return query;
   };
 
   /**
-   * @function mtgApp.randPick
-   * uses Math.random() to randomly pick from the given inputs
-   * @param  {...any} inputs one or more inputs
-   * @return any one of the inputs, with equal probability
+   * @function gateway.randPick
+   * uses Math.random() to randomly pick from the given arguments
+   * @param  {...any} args one or more arguments
+   * @return any argument, with equal probability
    */
-  mtgApp.randPick = (...inputs) => {
-    const randInt = Math.floor(Math.random() * inputs.length);
-    return inputs[randInt];
+  gateway.randPick = (...args) => {
+    const randInt = Math.floor(Math.random() * args.length);
+    return args[randInt];
   };
 
   /**
-   * @function mtgApp.fetchRandomCard
+   * @function gateway.fetchRandomCard
    * fetches a random card of the specified type
-   * @param {string} type a specified type from mtgApp.cardTypes[]
+   * @param {string} type a specified type from gateway.cardTypes[]
    */
-  mtgApp.fetchRandomCard = (type) => {
-    // generate request parameter from type
-    mtgApp.url.search = new URLSearchParams({
-      q: mtgApp.generateQuery(type),
+  gateway.fetchRandomCard = (type) => {
+    gateway.url.search = new URLSearchParams({
+      // generate request parameter from type
+      q: gateway.buildFilterQuery(type),
     });
 
-    fetch(mtgApp.url)
-    .then((response) => response.json())
-    .then((card) => mtgApp.cards[type] = card);
+    fetch(gateway.url)
+      .then((response) => response.json())
+      .then((card) => (gateway.cards[type] = card));
   };
 };
 
 // main init function
-mtgApp.init = () => {
-  mtgApp.initFuncs();
-  mtgApp.initData();
+gateway.init = () => {
+  gateway.initFuncs();
+  gateway.initData();
 };
 
-mtgApp.init();
+gateway.init();
 
-mtgApp.cardTypes.forEach((type) => mtgApp.fetchRandomCard(type));
+gateway.cardTypes.forEach((type) => gateway.fetchRandomCard(type));
