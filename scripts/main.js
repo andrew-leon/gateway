@@ -2,12 +2,13 @@
 
 // 2. For the relevant cards (creature & planeswalker) grab additional information to be used in explanation text
 
-// 3. Display cards on page using object url as img src, and card name/type as alt text
+// 3. Display cards on page using object url as img src, 
+//and card name/type as alt text
 
 const mtgApp = {};
 
+// initializes all data; called in mtgApp.init()
 mtgApp.initData = () => {
-
   // array of card types to display
   mtgApp.cardTypes = [
     "Land",
@@ -15,107 +16,92 @@ mtgApp.initData = () => {
     "Artifact",
     "Enchantment",
     "Planeswalker",
-    mtgApp.instantOrSorcery()
+    mtgApp.randPick("Instant", "Sorcery")
   ];
 
-  // dictionary of card objects to be populated at runtime from API
+  // dictionary of card objects, populated at runtime
   mtgApp.cards = {};
 
-  // API endpoints
-  mtgApp.apiUrls = {
-    random: 'https://api.scryfall.com/cards/random',
-    named: 'https://api.scryfall.com/cards/named',
-    bulk: 'https://api.scryfall.com/bulk-data'
-  }
+  // API endpoint
+  mtgApp.url = new URL("https://api.scryfall.com/cards/random");
 };
 
+// initializes all functions; called in mtgApp.init()
 mtgApp.initFuncs = () => {
+
   /**
-   * @function mtgApp.instantOrSorcery
-   * picks between "Instant" and "Sorcery" at random
-   * @return {String} either "Instant" or "Sorcery" (50% odds)
+   * @function mtgApp.generateQuery
+   * Generates a query string for a given card type (e.g. "Land").
+   * The query string is formatted using the Scryfall API docs
+   * (https://scryfall.com/docs/syntax) to filter in the following ways:
+   * 
+   *  - only cards matching the given card type, and no other type
+   *  - no cards with multiple faces 
+   * 
+   * @param {string} type a specified type from mtgApp.cardTypes[]
+   * @return a formated query string
    */
-  mtgApp.instantOrSorcery = () => {
-    const rand = Math.random();
-    if (rand >= 0.5) {
-      return "Instant";
+  mtgApp.generateQuery = (type) => {
+
+    // include only cards with given type
+    let query = `t:${type.toLowerCase()} `;
+
+    // exclude all other card types
+    // (this excludes multiple-type cards)
+    for (let cardType of mtgApp.cardTypes) {
+      if (cardType != type) {
+        query += `-t:${cardType.toLowerCase()} `;
+      }
     }
-    return "Sorcery";
+
+    // a list of types of multi-faced cards
+    const multiFacedTypes = [
+      "split",
+      "flip",
+      "transform",
+      "meld",
+    ];
+
+    // exclude all types of multi-faced cards
+    for (let cardType of multiFacedTypes) {
+      query += `-is:${cardType} `;
+    }
+
+    // exclude funny cards
+    query += `-is:funny`;
+
+    return query;
   };
 
   /**
-   * tests whether card's type line matches type, and no other supertype
-   * @function mtgApp.matchesCardType
-   * @param  {String} typeLine  a card's full type line
-   * @param  {String} type      a specific type from the cardTypes array
-   * @return {boolean}          true if "typeLine" has only the supertype
-   *                            specified by "type"
+   * @function mtgApp.randPick
+   * uses Math.random() to randomly pick from the given inputs
+   * @param  {...any} inputs one or more inputs
+   * @return any one of the inputs, with equal probability
    */
-  mtgApp.matchesCardType = (typeLine, type) => {
-      const typeRegex = new RegExp(
-        `^([(Legendary)(Tribal)] )?${type}( — .+)?$`
-      );
-      return typeRegex.test(typeLine);
+  mtgApp.randPick = (...inputs) => {
+    const randInt = Math.floor(Math.random() * inputs.length);
+    return inputs[randInt];
   };
-
-  /* TODO: IMPROVE fetchRandomCard()
-  
-    make it search for multiple categories at once
-
-    1. get random card
-    2. check if it fills any empty categories (types)
-    3. if it does, mark that category as filled
-    4. repeat steps 1-3 until all categories filled or MAXLOOPS
-
-    optionally: look into slowing our own requests (add 50ms or so)
-  */
 
   /**
    * @function mtgApp.fetchRandomCard
-   * queries random mtg cards until it gets one of the specified type
-   * @param {String} type can be one of the following words:
-   * land, creature, artifact, enchantment, planeswalker, instant, sorcery
+   * fetches a random card of the specified type
+   * @param {string} type a specified type from mtgApp.cardTypes[]
    */
-  mtgApp.fetchRandomCard = async (type) => {
+  mtgApp.fetchRandomCard = (type) => {
+    // generate request parameter from type
+    mtgApp.url.search = new URLSearchParams({
+      q: mtgApp.generateQuery(type),
+    });
 
-    // attempt no more than MAX_LOOPS number of fetches
-    const MAX_LOOPS = 100;
-    let finished = false;
-    for (i = 0; !finished && i < MAX_LOOPS; i++) {
-
-      // fetch random card object
-      await fetch(mtgApp.apiUrls.random)
-      .then((response) => {
-        return response.json();
-      })
-      .then((card) => {
-        // if this card is legal and of the specified type, display it and finish the loop
-        if (
-          mtgApp.matchesCardType(card.type_line, type) && 
-          card.legalities.commander === "legal"
-        ) {
-          mtgApp.displayCard(card);
-          finished = true;
-        };
-      });
-    };
-
-    // if we (somehow) failed to find the appropriate card in 100 attempts...
-    if (!finished) {
-      // add an image from a pre-selected local card cache?
-    }
-  };
-
-  /**
-   * @function mtgApp.displayCard
-   * displays a card object on the page
-   * @param {Object} card an object representing a card from MtG
-   */
-  mtgApp.displayCard = (card) => {
-    console.log(card, card.type_line);
+    fetch(mtgApp.url)
+    .then((response) => response.json())
+    .then((card) => mtgApp.cards[type] = card);
   };
 };
 
+// main init function
 mtgApp.init = () => {
   mtgApp.initFuncs();
   mtgApp.initData();
@@ -123,12 +109,4 @@ mtgApp.init = () => {
 
 mtgApp.init();
 
-// for (let type of mtgApp.cardTypes) {
-//   mtgApp.fetchRandomCard(type);
-// };
-
-fetch(mtgApp.apiUrls.bulk)
-  .then((response) => response.json())
-  .then((result) => {
-    console.log(result);
-  });
+mtgApp.cardTypes.forEach((type) => mtgApp.fetchRandomCard(type));
