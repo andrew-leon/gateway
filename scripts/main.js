@@ -107,7 +107,11 @@ gateway.initFuncs = () => {
 
     fetch(gateway.url)
       .then((response) => response.json())
-      .then((card) => (gateway.cards[type] = card));
+      .then((card) => gateway.cards[type] = {
+        name: card.name,
+        type: card.type_line,
+        uris: card.image_uris
+      });
   };
 };
 
