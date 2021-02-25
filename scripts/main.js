@@ -35,6 +35,13 @@ gateway.initData = () => {
   ];
 
   // dictionary of card objects; populated at runtime
+  /* Anatomy of a card object:
+  {
+    name: "Squee, the Immortal"
+    type: "Legendary Creature — Goblin"
+    image:  "https://c1.scryfall.com/file/scryfall-cards/normal/front/a/3/a3974c62-a524-454e-9ce7-2c23b704e5cb.jpg?1562740600"
+  }
+  */
   gateway.cards = {};
 
   // API endpoint
@@ -43,21 +50,23 @@ gateway.initData = () => {
 
 // initializes all functions; called in gateway.init()
 gateway.initFuncs = () => {
+
   /**
-   * @function gateway.buildFilterQuery
+   * @function gateway.buildFilterQuery()
    * Generates a query string for a given card type (e.g. "Land").
    * The query string is formatted using Scryfall's advanced search syntax 
-   * (see "LINKS" section above) to filter the random card request 
+   * (https://scryfall.com/docs/syntax) to filter the random card request 
    * in the following ways:
    *
    *  - only cards matching the given card type, and no other type
    *  - no cards with multiple faces
    *  - no "funny" cards
    *
-   * @param {string} type a specified type from gateway.cardTypes[]
-   * @return a formated query string
+   * @param {string} type A specified type from gateway.cardTypes[]
+   * @return A formated query string
    */
   gateway.buildFilterQuery = (type) => {
+
     // include only cards with given type, e.g. "t:land"
     let query = `t:${type.toLowerCase()} `;
 
@@ -84,35 +93,86 @@ gateway.initFuncs = () => {
   };
 
   /**
-   * @function gateway.randPick
-   * uses Math.random() to randomly pick from the given arguments
-   * @param  {...any} args one or more arguments
-   * @return any argument, with equal probability
+   * @function gateway.randPick()
+   * Uses Math.random() to randomly pick from the given arguments.
+   * @param  {...any} args One or more arguments
+   * @return Any of the arguments, with equal probability
    */
   gateway.randPick = (...args) => {
+
     const randInt = Math.floor(Math.random() * args.length);
     return args[randInt];
   };
 
   /**
-   * @function gateway.fetchRandomCard
-   * fetches a random card of the specified type
-   * @param {string} type a specified type from gateway.cardTypes[]
+   * @function gateway.fetchRandomCard()
+   * Fetches a random card of the specified type, and writes it to 
+   * the gateway.cards object.
+   * @param {string} type A specified type from gateway.cardTypes[]
    */
-  gateway.fetchRandomCard = (type) => {
+  gateway.fetchRandomCard = async (type) => {
+
     gateway.url.search = new URLSearchParams({
       // generate request parameter from type
       q: gateway.buildFilterQuery(type),
     });
 
-    fetch(gateway.url)
+    let cardData;
+
+    await fetch(gateway.url)
       .then((response) => response.json())
-      .then((card) => gateway.cards[type] = {
-        name: card.name,
-        type: card.type_line,
-        uris: card.image_uris
+      .then((card) => {
+        cardData = card;    
       });
+    gateway.cards[type] = {
+      name: cardData.name,
+      type: cardData.type_line,
+      image: cardData.image_uris.png
+    };
+    gateway.displayCard(type);
   };
+
+  /**
+   * @function gateway.displayCard()
+   * Dynamically generates an html representation of an MTG card, using
+   * the card's name and type line for the alt text.
+   * @param {object} type A specified type from gateway.cardTypes[]
+   */
+  gateway.displayCard = (type) => {
+
+    const card = gateway.cards[type];
+
+    const prevImage = document.createElement('img');
+    prevImage.src = card.image;
+    prevImage.alt = `${card.name}: ${card.type}`;
+
+    const mainImage = prevImage.cloneNode(true);
+
+    prevImage.classList.add('cardPrev');
+
+    const anchor = document.createElement('a');
+    anchor.href = '';
+    anchor.appendChild(prevImage);
+
+    const li = document.createElement('li');
+    li.appendChild(anchor);
+
+    const list = document.querySelector(".cardPrevList");
+
+    list.appendChild(li);
+
+    // replace "Instant" and "Sorcery" types with "Spell" to match section id
+    const id = (type == "Instant" || type == "Sorcery") 
+      ? "Spell" 
+      : type;
+
+    const section = document.getElementById(id);
+
+    const article = document.getElementById(id + ' article');
+
+    section.insertBefore(mainImage, article);
+
+  }
 };
 
 // main init function
@@ -123,4 +183,4 @@ gateway.init = () => {
 
 gateway.init();
 
-gateway.cardTypes.forEach((type) => gateway.fetchRandomCard(type));
+gateway.cardTypes.forEach(type => gateway.fetchRandomCard(type));
