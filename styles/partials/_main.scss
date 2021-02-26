@@ -1,0 +1,21 @@
+.cardPrevCont {
+    h3 {
+        font-size: 3rem;
+        text-align: center;
+        margin-bottom: 25px;
+        padding-top: 25px;
+        border-top: 2px solid $lightTeal;
+    }
+    .cardPrevList {
+        padding: 0;
+        display: flex;
+        justify-content: space-between;
+        li {
+            padding: 0 10px;
+            img {
+                box-shadow: 5px 5px 0 $lightTeal;
+                border-radius: 9px;
+            }
+        }
+    }
+}

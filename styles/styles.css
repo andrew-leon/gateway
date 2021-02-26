@@ -281,15 +281,15 @@ nav {
       -ms-flex-pack: justify;
           justify-content: space-between;
   margin-bottom: 50px;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
 }
 
 nav ul {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: end;
-      -ms-flex-align: end;
-          align-items: flex-end;
 }
 
 nav ul li {
@@ -297,7 +297,7 @@ nav ul li {
 }
 
 nav img {
-  width: 7%;
+  width: 5%;
 }
 
 nav .subMenu {
@@ -322,7 +322,7 @@ nav .subMenu {
 nav .mainMenu li:hover .subMenu,
 nav .mainMenu li:focus-within .subMenu {
   height: auto;
-  top: 18%;
+  top: 15%;
 }
 
 .introFlex {
@@ -332,6 +332,7 @@ nav .mainMenu li:focus-within .subMenu {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  margin-bottom: 50px;
 }
 
 .introFlex h1 {
@@ -355,6 +356,34 @@ nav .mainMenu li:focus-within .subMenu {
 .introFlex .introEx h2 {
   font-size: 3.5rem;
   font-style: italic;
+}
+
+.cardPrevCont h3 {
+  font-size: 3rem;
+  text-align: center;
+  margin-bottom: 25px;
+  padding-top: 25px;
+  border-top: 2px solid #82aaaa;
+}
+
+.cardPrevCont .cardPrevList {
+  padding: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.cardPrevCont .cardPrevList li {
+  padding: 0 10px;
+}
+
+.cardPrevCont .cardPrevList li img {
+  -webkit-box-shadow: 5px 5px 0 #82aaaa;
+          box-shadow: 5px 5px 0 #82aaaa;
+  border-radius: 9px;
 }
 
 body {
