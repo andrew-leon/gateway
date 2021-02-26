@@ -24,6 +24,10 @@ const gateway = {};
 
 // initializes all data; called in gateway.init()
 gateway.initData = () => {
+
+  // randomly instant or sorcery on page-load
+  const spell = gateway.randPick("Instant", "Sorcery");
+
   // array of card types to display
   gateway.cardTypes = [
     "Land",
@@ -31,7 +35,7 @@ gateway.initData = () => {
     "Artifact",
     "Enchantment",
     "Planeswalker",
-    gateway.randPick("Instant", "Sorcery"),
+    spell
   ];
 
   // dictionary of card objects; populated at runtime
@@ -119,17 +123,7 @@ gateway.initFuncs = () => {
 
     let cardData;
 
-    await fetch(gateway.url)
-      .then((response) => response.json())
-      .then((card) => {
-        cardData = card;    
-      });
-    gateway.cards[type] = {
-      name: cardData.name,
-      type: cardData.type_line,
-      image: cardData.image_uris.png
-    };
-    gateway.displayCard(type);
+    return await fetch(gateway.url).then((response) => response.json());
   };
 
   /**
@@ -142,16 +136,19 @@ gateway.initFuncs = () => {
 
     const card = gateway.cards[type];
 
+    // create "preview" image (for "pick a card" section)
     const prevImage = document.createElement('img');
     prevImage.src = card.image;
     prevImage.alt = `${card.name}: ${card.type}`;
 
+    // create "main" image (for explanation section)
     const mainImage = prevImage.cloneNode(true);
 
+    // give "preview" image specific class (for css purposes)
     prevImage.classList.add('cardPrev');
 
     const anchor = document.createElement('a');
-    anchor.href = '';
+    anchor.href = '#'+type;
     anchor.appendChild(prevImage);
 
     const li = document.createElement('li');
@@ -162,16 +159,17 @@ gateway.initFuncs = () => {
     list.appendChild(li);
 
     // replace "Instant" and "Sorcery" types with "Spell" to match section id
-    const id = (type == "Instant" || type == "Sorcery") 
-      ? "Spell" 
+    const id = (type == "Instant" || type == "Sorcery")
+      ? "Spell"
       : type;
 
-    const section = document.getElementById(id);
+    const article = document.querySelector(`#${id}  article`);
 
-    const article = document.getElementById(id + ' article');
+    console.log(article);
 
-    section.insertBefore(mainImage, article);
+    console.log(mainImage instanceof Element);
 
+    mainImage.insertAdjacentElement('beforebegin', article);
   }
 };
 
@@ -183,4 +181,23 @@ gateway.init = () => {
 
 gateway.init();
 
-gateway.cardTypes.forEach(type => gateway.fetchRandomCard(type));
+const promises = [];
+for (let type, i = 0; i < gateway.cardTypes.length; i++) {
+  type = gateway.cardTypes[i];
+  promises[i] = gateway.fetchRandomCard(type);
+}
+
+Promise.all(promises).then(cards => {
+
+  for (let type, card, i = 0; i < cards.length; i++) {
+    card = cards[i];
+    type = gateway.cardTypes[i];
+    gateway.cards[type] = {
+      name: card.name,
+      type: card.type_line,
+      image: card.image_uris.normal
+    };
+
+    gateway.displayCard(type);
+  }
+});
