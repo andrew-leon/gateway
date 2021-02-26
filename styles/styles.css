@@ -269,5 +269,93 @@ html {
   overflow: hidden;
 }
 
-@imo;
-/*# sourceMappingURL=styles.css.map */
+nav {
+  font-family: "Ubuntu", sans-serif;
+  height: 10vw;
+  padding: 1vw 0;
+  border-bottom: 2px solid #82aaaa;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+nav ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+}
+
+nav img {
+  width: 7%;
+}
+
+nav .subMenu {
+  background-color: #82aaaa;
+  color: white;
+  line-height: 2rem;
+  text-align: right;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  position: absolute;
+  overflow: hidden;
+  padding: 0;
+  top: -35%;
+  right: 8%;
+}
+
+nav .mainMenu li:active .subMenu,
+nav .mainMenu li:focus-within .subMenu {
+  height: auto;
+  top: 18%;
+}
+
+body {
+  color: #58595b;
+  font-family: "Roboto", sans-serif;
+  font-size: 1.3rem;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+ul {
+  list-style: none;
+  padding: none;
+  margin: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.wrapper {
+  margin: 0 auto;
+  width: 90%;
+  max-width: 1200px;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: "Ubuntu", sans-serif;
+}
+
+nav a {
+  font-size: 1.5rem;
+  text-align: center;
+}

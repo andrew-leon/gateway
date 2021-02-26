@@ -9,21 +9,23 @@
   <link rel="stylesheet" href="./styles/styles.css">
 </head>
 <body>
-  <header>
+  <header class="wrapper">
     <nav>
       <img src="./assets/gateway-logo.svg" alt="a stylized capital g">
       <ul class="mainMenu">
         <li><a href="#home">Home</a></li>
-        <li><a href="#cards">Cards</a>
-          <ul class="subMenu">
-            <li><a href="#Land">Lands</a></li>
-            <li><a href="#Creature">Creatures</a></li>
-            <li><a href="#Artifact">Artifacts</a></li>
-            <li><a href="#Enchantment">Enchantments</a></li>
-            <li><a href="#Planeswalker">Planeswalkers</a></li>
-            <li><a href="#Spell">Instants & Sorceries</a></li>
-          </ul>
-        </li>
+        <label for="toggle" aria-label="navDrop">
+          <li><a href="">Cards</a>
+            <ul class="subMenu">
+              <li><a href="#Land">Lands</a></li>
+              <li><a href="#Creature">Creatures</a></li>
+              <li><a href="#Artifact">Artifacts</a></li>
+              <li><a href="#Enchantment">Enchantments</a></li>
+              <li><a href="#Planeswalker">Planeswalkers</a></li>
+              <li><a href="#Spell">Instants & Sorceries</a></li>
+            </ul>
+          </li>
+        </label>
       </ul>
     </nav>
     <section class="introFlex">
@@ -34,7 +36,7 @@
       </div>
     </section>
   </header>
-  <main>
+  <main class="wrapper">
     <section class="cardPrevCont" id="cards">
       <h3>Pick a card to get started</h3>
       <ul class="cardPrevList">
@@ -89,7 +91,7 @@
       </article>
     </section>
   </main>
-  <footer>
+  <footer class="wrapper">
     <p>Copyright &copy 2021 <a href="">Juno</a></p>
     <p>Powered by <a href="">Scryfall</a></p>
   </footer>
