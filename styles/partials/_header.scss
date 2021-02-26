@@ -1,0 +1,38 @@
+nav {
+    font-family: $primaryFont;
+    height: 10vw;
+    padding: 1vw 0;
+    border-bottom: 2px solid $lightTeal;
+    display: flex;
+    justify-content: space-between;
+    ul{
+        display: flex;
+        align-items: flex-end;
+        li {
+            
+        }
+    }
+    img {
+        width: 7%;
+    }
+    .subMenu {
+        background-color: $lightTeal;
+        color: white;
+        line-height: 2rem;
+        text-align: right;
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        overflow: hidden;
+        padding: 0;
+        top: -35%;
+        right: 8%;
+    }
+
+    .mainMenu li:active .subMenu,
+	.mainMenu li:focus-within .subMenu {
+		height: auto;
+                top: 18%;
+	}
+
+}
