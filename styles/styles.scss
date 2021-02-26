@@ -6,8 +6,7 @@
 body {
     color: $darkGrey;
     font-family: $bodyFont;
-    font-size: 1.3rem;
-    
+    font-size: 1.3rem;   
 }
 
 img {
@@ -37,10 +36,15 @@ h2,
 h3,
 h4 {
     font-family: $primaryFont;
+    margin: 0 auto;
+}
+
+p {
+    line-height: 1.8rem;
 }
 
 nav {
-    a {
+    a, li {
         font-size: 1.5rem;
         text-align: center;
     }

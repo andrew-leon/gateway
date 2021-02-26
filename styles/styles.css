@@ -280,6 +280,7 @@ nav {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+  margin-bottom: 50px;
 }
 
 nav ul {
@@ -289,6 +290,10 @@ nav ul {
   -webkit-box-align: end;
       -ms-flex-align: end;
           align-items: flex-end;
+}
+
+nav ul li {
+  padding-left: 20px;
 }
 
 nav img {
@@ -309,15 +314,47 @@ nav .subMenu {
           flex-direction: column;
   position: absolute;
   overflow: hidden;
-  padding: 0;
+  padding: 10px;
   top: -35%;
   right: 8%;
 }
 
-nav .mainMenu li:active .subMenu,
+nav .mainMenu li:hover .subMenu,
 nav .mainMenu li:focus-within .subMenu {
   height: auto;
   top: 18%;
+}
+
+.introFlex {
+  background: #075553;
+  color: white;
+  padding: 40px 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.introFlex h1 {
+  font-size: 4.5rem;
+  line-height: 5rem;
+  text-align: right;
+  padding-right: 30px;
+  -webkit-box-flex: 35%;
+      -ms-flex: 35%;
+          flex: 35%;
+}
+
+.introFlex .introEx {
+  -webkit-box-flex: 65%;
+      -ms-flex: 65%;
+          flex: 65%;
+  padding-left: 30px;
+  border-left: 2px solid white;
+}
+
+.introFlex .introEx h2 {
+  font-size: 3.5rem;
+  font-style: italic;
 }
 
 body {
@@ -353,9 +390,14 @@ h2,
 h3,
 h4 {
   font-family: "Ubuntu", sans-serif;
+  margin: 0 auto;
 }
 
-nav a {
+p {
+  line-height: 1.8rem;
+}
+
+nav a, nav li {
   font-size: 1.5rem;
   text-align: center;
 }

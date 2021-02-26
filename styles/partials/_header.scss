@@ -5,11 +5,12 @@ nav {
     border-bottom: 2px solid $lightTeal;
     display: flex;
     justify-content: space-between;
+    margin-bottom: 50px;
     ul{
         display: flex;
         align-items: flex-end;
         li {
-            
+            padding-left: 20px;
         }
     }
     img {
@@ -24,15 +25,37 @@ nav {
         flex-direction: column;
         position: absolute;
         overflow: hidden;
-        padding: 0;
+        padding: 10px;
         top: -35%;
         right: 8%;
     }
 
-    .mainMenu li:active .subMenu,
+    .mainMenu li:hover .subMenu,
 	.mainMenu li:focus-within .subMenu {
 		height: auto;
                 top: 18%;
 	}
+}
 
+.introFlex {
+    background: $gatewayTeal;
+    color: white;
+    padding: 40px 20px;
+    display: flex;
+    h1{
+        font-size: 4.5rem;
+        line-height: 5rem;
+        text-align: right;
+        padding-right: 30px;
+        flex: 35%;
+    }
+    .introEx {
+        flex: 65%;
+        padding-left: 30px;
+        border-left: 2px solid white;
+        h2 {
+            font-size: 3.5rem;
+            font-style: italic;
+        }
+    }
 }
