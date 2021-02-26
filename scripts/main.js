@@ -163,13 +163,11 @@ gateway.initFuncs = () => {
       ? "Spell"
       : type;
 
+    // const section = document.querySelector('#'+id);
+
     const article = document.querySelector(`#${id}  article`);
 
-    console.log(article);
-
-    console.log(mainImage instanceof Element);
-
-    mainImage.insertAdjacentElement('beforebegin', article);
+    article.insertAdjacentElement('beforebegin', mainImage);
   }
 };
 
