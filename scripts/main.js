@@ -116,6 +116,8 @@ gateway.initFuncs = () => {
    * Fetches a random card of the specified type, and writes it to 
    * the gateway.cards object.
    * @param {string} type A specified type from gateway.cardTypes[]
+   * @return A promise which resolves to a JSON representation of a 
+   * card of the specified type.
    */
   gateway.fetchRandomCard = async (type) => {
 
@@ -124,9 +126,16 @@ gateway.initFuncs = () => {
       q: gateway.buildFilterQuery(type),
     });
 
-    let cardData;
+    const promiseData = await fetch(gateway.url)
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('Network response was not ok');
+        }
+      });
 
-    return await fetch(gateway.url).then((response) => response.json());
+    return promiseData;
   };
 
   /**
@@ -165,7 +174,7 @@ gateway.initFuncs = () => {
     const list = document.querySelector(".cardPrevList");
 
     list.appendChild(li);
-    
+
 
     // finds the image container in the relevant article
     const imgContainer = document.querySelector(`#${id} .lrgImgContainer`);
@@ -178,40 +187,62 @@ gateway.initFuncs = () => {
 gateway.init = () => {
   gateway.initFuncs();
   gateway.initData();
-  
+  /* 
+  GOAL: make promises come in a specific order
+  CHALLENGE: promises take ??? time to resolve
+  SOLUTION: 
+    1. shove promises in an array 
+    2. do Promise.all(array)
+  */
+  // empty promises array
   gateway.promises = [];
+
+  // populates promise array with API responses (converted to json)
   for (let type, i = 0; i < gateway.cardTypes.length; i++) {
     type = gateway.cardTypes[i];
+
+    // ensures that promises are inserted into array in specific order
     gateway.promises[i] = gateway.fetchRandomCard(type);
   }
-  
-  Promise.all(gateway.promises).then(cards => {
-  
-    for (let type, card, i = 0; i < cards.length; i++) {
-      card = cards[i];
+
+  // go through promises in order, 
+  // resolve the data, 
+  // convert to simplified object representation (see gateway.cards)
+  Promise.all(gateway.promises).then(cardsArray => {
+
+    for (let type, card, i = 0; i < cardsArray.length; i++) {
+
+      // the card we're currently on
+      card = cardsArray[i];
+
+      // the type that this card should be
+      // guaranteed by specific ordering of gateway.promises
       type = gateway.cardTypes[i];
+
+      // e.g. gateway.cards["Land"]
       gateway.cards[type] = {
         name: card.name,
         type: card.type_line,
         image: card.image_uris.normal
       };
-  
+
+      // display card (in order of type: land, then creature, etc)
       gateway.displayCard(type);
     }
-  });
-  
+  }).catch(error => console.error(error.message));
+
   gateway.cardPrevList.addEventListener('click', (event) => {
     // check if event.target is an image
     if (event.target.tagName == "IMG") {
-  
+
       // get type (from img class)
       const type = event.target.className;
-      
+
       // get target section to scroll to
-      const section = document.querySelector('#'+type);
-      
+      const section = document.querySelector('#' + type);
+
       // scroll to section
-      section.scrollIntoView({behavior: "smooth"});
+      section.scrollIntoView({ behavior: "smooth" });
     }
   });
 };

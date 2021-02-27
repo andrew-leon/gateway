@@ -23,7 +23,7 @@ You will also be given a general mark on how well you adhere to best practices m
 - [X] Sass selectors should not be nested more than 3 levels deep
 
 ### Outstanding
+- [ ] Errors are handled effectively
 - [ ] Site is responsive and uses media queries
 - [ ] App and interactions are accessible
-- [ ] Errors are handled effectively
 - [ ] Site is live on GH Pages, Netlify, or student’s own 
