@@ -163,12 +163,10 @@ gateway.initFuncs = () => {
       ? "Spell"
       : type;
 
-    // const section = document.querySelector('#'+id);
-
+    // finds the image container in the relevant article
     const imgContainer = document.querySelector(`#${id} .lrgImgContainer`);
 
     imgContainer.appendChild(mainImage);
-    // article.insertAdjacentElement('beforebegin', mainImage);
   }
 };
 
@@ -199,4 +197,9 @@ Promise.all(promises).then(cards => {
 
     gateway.displayCard(type);
   }
+});
+
+const list = document.querySelector(".cardPrevList");
+list.addEventListener('click', (event) => {
+  
 });
