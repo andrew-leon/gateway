@@ -40,6 +40,10 @@ nav {
 		height: auto;
         top: 25px;
 	}
+
+    .subMenu li:hover {
+        color: $gatewayTeal;
+    }
 }
 
 .introFlex {

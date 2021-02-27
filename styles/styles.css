@@ -329,6 +329,10 @@ nav .mainMenu li:focus-within .subMenu {
   top: 25px;
 }
 
+nav .subMenu li:hover {
+  color: #075553;
+}
+
 .introFlex {
   background: #075553;
   color: white;
@@ -396,6 +400,19 @@ nav .mainMenu li:focus-within .subMenu {
   border-radius: 4%;
 }
 
+.cardPrevCont .cardPrevList li img:hover {
+  -webkit-transform: scale(1.05);
+          transform: scale(1.05);
+}
+
+.cardPrevCont .cardPrevList li img:active {
+  position: relative;
+  left: 5px;
+  top: 5px;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
 .explainer {
   margin-bottom: 70px;
   display: -webkit-box;
@@ -409,6 +426,10 @@ nav .mainMenu li:focus-within .subMenu {
           flex: 30%;
   margin-right: 25px;
   border-radius: 70px;
+}
+
+.explainer .lrgImgContainer img {
+  border-radius: 18px;
 }
 
 .explainer article {
