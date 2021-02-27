@@ -25,7 +25,7 @@ const gateway = {};
 // initializes all data; called in gateway.init()
 gateway.initData = () => {
 
-  // randomly instant or sorcery on page-load
+  // randomly resolves to "Instant" or "Sorcery" on page-load
   const spell = gateway.randPick("Instant", "Sorcery");
 
   // array of card types to display
@@ -165,9 +165,10 @@ gateway.initFuncs = () => {
 
     // const section = document.querySelector('#'+id);
 
-    const article = document.querySelector(`#${id}  article`);
+    const imgContainer = document.querySelector(`#${id} .lrgImgContainer`);
 
-    article.insertAdjacentElement('beforebegin', mainImage);
+    imgContainer.appendChild(mainImage);
+    // article.insertAdjacentElement('beforebegin', mainImage);
   }
 };
 
