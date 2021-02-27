@@ -50,6 +50,9 @@ gateway.initData = () => {
 
   // API endpoint
   gateway.url = new URL("https://api.scryfall.com/cards/random");
+
+  // <ul class="cardPrevList"> (see HTML)
+  gateway.cardPrevList = document.querySelector(".cardPrevList");
 };
 
 // initializes all functions; called in gateway.init()
@@ -134,6 +137,11 @@ gateway.initFuncs = () => {
    */
   gateway.displayCard = (type) => {
 
+    // replace "Instant" and "Sorcery" types with "Spell" to match section id
+    const id = (type == "Instant" || type == "Sorcery")
+      ? "Spell"
+      : type;
+
     const card = gateway.cards[type];
 
     // create "preview" image (for "pick a card" section)
@@ -144,24 +152,20 @@ gateway.initFuncs = () => {
     // create "main" image (for explanation section)
     const mainImage = prevImage.cloneNode(true);
 
-    // give "preview" image specific class (for css purposes)
-    prevImage.classList.add('cardPrev');
+    prevImage.classList.add(id);
 
-    const anchor = document.createElement('a');
-    anchor.href = '#'+type;
-    anchor.appendChild(prevImage);
+    // const anchor = document.createElement('a');
+    // anchor.href = '#'+type;
+    // anchor.appendChild(prevImage);
 
     const li = document.createElement('li');
-    li.appendChild(anchor);
+    // li.appendChild(anchor);
+    li.appendChild(prevImage);
 
     const list = document.querySelector(".cardPrevList");
 
     list.appendChild(li);
-
-    // replace "Instant" and "Sorcery" types with "Spell" to match section id
-    const id = (type == "Instant" || type == "Sorcery")
-      ? "Spell"
-      : type;
+    
 
     // finds the image container in the relevant article
     const imgContainer = document.querySelector(`#${id} .lrgImgContainer`);
@@ -178,13 +182,13 @@ gateway.init = () => {
 
 gateway.init();
 
-const promises = [];
+gateway.promises = [];
 for (let type, i = 0; i < gateway.cardTypes.length; i++) {
   type = gateway.cardTypes[i];
-  promises[i] = gateway.fetchRandomCard(type);
+  gateway.promises[i] = gateway.fetchRandomCard(type);
 }
 
-Promise.all(promises).then(cards => {
+Promise.all(gateway.promises).then(cards => {
 
   for (let type, card, i = 0; i < cards.length; i++) {
     card = cards[i];
@@ -199,7 +203,17 @@ Promise.all(promises).then(cards => {
   }
 });
 
-const list = document.querySelector(".cardPrevList");
-list.addEventListener('click', (event) => {
-  
+gateway.cardPrevList.addEventListener('click', (event) => {
+  // check if event.target is an image
+  if (event.target.tagName == "IMG") {
+
+    // get type (from img class)
+    const type = event.target.className;
+    
+    // get target section to scroll to
+    const section = document.querySelector('#'+type);
+    
+    // scroll to section
+    section.scrollIntoView({behavior: "smooth"});
+  }
 });
