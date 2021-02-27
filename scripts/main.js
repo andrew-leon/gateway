@@ -178,42 +178,42 @@ gateway.initFuncs = () => {
 gateway.init = () => {
   gateway.initFuncs();
   gateway.initData();
+  
+  gateway.promises = [];
+  for (let type, i = 0; i < gateway.cardTypes.length; i++) {
+    type = gateway.cardTypes[i];
+    gateway.promises[i] = gateway.fetchRandomCard(type);
+  }
+  
+  Promise.all(gateway.promises).then(cards => {
+  
+    for (let type, card, i = 0; i < cards.length; i++) {
+      card = cards[i];
+      type = gateway.cardTypes[i];
+      gateway.cards[type] = {
+        name: card.name,
+        type: card.type_line,
+        image: card.image_uris.normal
+      };
+  
+      gateway.displayCard(type);
+    }
+  });
+  
+  gateway.cardPrevList.addEventListener('click', (event) => {
+    // check if event.target is an image
+    if (event.target.tagName == "IMG") {
+  
+      // get type (from img class)
+      const type = event.target.className;
+      
+      // get target section to scroll to
+      const section = document.querySelector('#'+type);
+      
+      // scroll to section
+      section.scrollIntoView({behavior: "smooth"});
+    }
+  });
 };
 
 gateway.init();
-
-gateway.promises = [];
-for (let type, i = 0; i < gateway.cardTypes.length; i++) {
-  type = gateway.cardTypes[i];
-  gateway.promises[i] = gateway.fetchRandomCard(type);
-}
-
-Promise.all(gateway.promises).then(cards => {
-
-  for (let type, card, i = 0; i < cards.length; i++) {
-    card = cards[i];
-    type = gateway.cardTypes[i];
-    gateway.cards[type] = {
-      name: card.name,
-      type: card.type_line,
-      image: card.image_uris.normal
-    };
-
-    gateway.displayCard(type);
-  }
-});
-
-gateway.cardPrevList.addEventListener('click', (event) => {
-  // check if event.target is an image
-  if (event.target.tagName == "IMG") {
-
-    // get type (from img class)
-    const type = event.target.className;
-    
-    // get target section to scroll to
-    const section = document.querySelector('#'+type);
-    
-    // scroll to section
-    section.scrollIntoView({behavior: "smooth"});
-  }
-});
