@@ -304,6 +304,7 @@ nav li .subMenu {
   right: 0;
 }
 nav .mainMenu li:hover .subMenu,
+nav .mainMenu li:active .subMenu,
 nav .mainMenu li:focus-within .subMenu {
   height: auto;
   top: 25px;

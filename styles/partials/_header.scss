@@ -41,6 +41,7 @@ nav {
     }
 
     .mainMenu li:hover .subMenu,
+    .mainMenu li:active .subMenu,
 	.mainMenu li:focus-within .subMenu {
 		height: auto;
         top: 25px;
