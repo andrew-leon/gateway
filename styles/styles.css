@@ -468,6 +468,35 @@ footer {
   padding: 20px 10%;
 }
 
+@media (max-width: 900px) {
+  .introFlex {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .introFlex h1,
+  .introFlex h2 {
+    text-align: center;
+    padding: 0;
+  }
+  .introFlex .introEx {
+    padding: 30px;
+    border-top: 2px solid white;
+    border-left: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .introFlex h1 {
+    font-size: 3.5rem;
+    line-height: 4rem;
+  }
+  .introFlex h2 {
+    font-size: 3rem;
+  }
+}
+
 * {
   border: 1px solid coral;
 }
