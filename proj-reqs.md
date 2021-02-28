@@ -21,9 +21,9 @@ You will also be given a general mark on how well you adhere to best practices m
 - [X] One external `.css` stylesheet is used for whole project
 - [X] ID selectors should not be used to style elements
 - [X] Sass selectors should not be nested more than 3 levels deep
+- [X] Errors are handled effectively
 
 ### Outstanding
-- [ ] Errors are handled effectively
 - [ ] Site is responsive and uses media queries
 - [ ] App and interactions are accessible
 - [ ] Site is live on GH Pages, Netlify, or student’s own 
