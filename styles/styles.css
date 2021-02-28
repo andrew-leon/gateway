@@ -397,7 +397,7 @@ nav .subMenu li:hover {
 .cardPrevList li img {
   -webkit-box-shadow: 5px 5px 0 #82aaaa;
           box-shadow: 5px 5px 0 #82aaaa;
-  border-radius: 4%;
+  border-radius: 5%;
 }
 
 .cardPrevList li img:hover,
@@ -431,7 +431,7 @@ nav .subMenu li:hover {
 }
 
 .explainer .lrgImgContainer img {
-  border-radius: 20px;
+  border-radius: 5%;
 }
 
 .explainer article {
