@@ -78,8 +78,6 @@
     .explainer {
         .lrgImgContainer {
             width: 40%;
-            float: right;
-            margin-left: 15px;
         }
         article h4 {
             font-size: 2rem;
@@ -87,6 +85,44 @@
     }
 }
 
-@media(max-width:$mobileVertical) {
+@media(max-width:562px) {
+    .explainer {
+        display: flex;
+        flex-direction: column;
 
+        align-items: center;
+        
+        .lrgImgContainer {
+            float: none;
+            width: 50%;
+        }
+
+        article {
+            padding: 20px;
+        }
+    }
+}
+
+@media(max-width:$mobileVertical) {
+    .introFlex {
+        .introEx {
+            padding: 30px 0 0;
+        }
+    }
+
+    .cardPrevCont ul li {
+        width: 50%;
+    }
+
+    .explainer {
+        margin-bottom: 40px;
+
+        .lrgImgContainer {
+            width: 65%;
+        }
+        article {
+            text-align: center;
+            box-shadow: 5px 5px $lightTeal;
+        }
+    }
 }
