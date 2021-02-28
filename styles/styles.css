@@ -399,6 +399,7 @@ nav .subMenu li:hover {
 }
 
 .cardPrevList li img {
+  cursor: pointer;
   -webkit-box-shadow: 5px 5px 0 #82aaaa;
           box-shadow: 5px 5px 0 #82aaaa;
   border-radius: 5%;
@@ -502,7 +503,10 @@ footer {
   .explainer {
     display: block;
   }
-  .lrgImgContainer {
+  .explainer article {
+    margin-left: 0;
+  }
+  .explainer .lrgImgContainer {
     width: 35%;
     float: right;
     margin-left: 20px;
@@ -530,7 +534,15 @@ footer {
   }
   .cardPrevCont ul li {
     width: 30%;
-    margin: 10px;
+    margin-bottom: 20px;
+  }
+  .explainer .lrgImgContainer {
+    width: 40%;
+    float: right;
+    margin-left: 20px;
+  }
+  .explainer article h4 {
+    font-size: 2rem;
   }
 }
 
