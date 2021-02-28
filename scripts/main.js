@@ -156,10 +156,13 @@ gateway.initFuncs = () => {
     // create "preview" image (for "pick a card" section)
     const prevImage = document.createElement('img');
     prevImage.src = card.image;
-    let indefArticle = "a";
-    if (type == "Artifact" || type == "Enchantment" || type == "Instant") {
-      indefArticle = "an";
-    };
+
+    const typeVowelStart =
+      type == "Artifact" ||
+      type == "Enchantment" ||
+      type == "Instant";
+    
+    const indefArticle = typeVowelStart ? "an" : "a";
 
     prevImage.alt = `${card.name}: a preview of ${indefArticle} ${type} card`;
 
