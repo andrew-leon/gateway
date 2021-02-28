@@ -271,8 +271,8 @@ html {
 
 nav {
   font-family: "Ubuntu", sans-serif;
-  height: 7vw;
-  padding: 1vw 0;
+  height: 75px;
+  padding: 15px 0;
   border-bottom: 2px solid #82aaaa;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -298,6 +298,7 @@ nav ul li {
 
 nav img {
   width: 5%;
+  min-width: 50px;
 }
 
 nav li {
@@ -308,7 +309,6 @@ nav li .subMenu {
   background-color: #82aaaa;
   color: white;
   line-height: 2rem;
-  text-align: right;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -380,7 +380,7 @@ nav .subMenu li:hover {
   padding-top: 25px;
 }
 
-.cardPrevCont .cardPrevList {
+.cardPrevList {
   padding: 0 0 25px 0;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -390,22 +390,24 @@ nav .subMenu li:hover {
           justify-content: space-between;
 }
 
-.cardPrevCont .cardPrevList li {
+.cardPrevList li {
   padding: 0 10px;
 }
 
-.cardPrevCont .cardPrevList li img {
+.cardPrevList li img {
   -webkit-box-shadow: 5px 5px 0 #82aaaa;
           box-shadow: 5px 5px 0 #82aaaa;
   border-radius: 4%;
 }
 
-.cardPrevCont .cardPrevList li img:hover {
+.cardPrevList li img:hover,
+.cardPrevList li img:focus {
   -webkit-transform: scale(1.05);
           transform: scale(1.05);
 }
 
-.cardPrevCont .cardPrevList li img:active {
+.cardPrevList li img:active,
+.cardPrevList li img:focus {
   position: relative;
   left: 5px;
   top: 5px;
@@ -425,11 +427,11 @@ nav .subMenu li:hover {
       -ms-flex: 30%;
           flex: 30%;
   margin-right: 25px;
-  border-radius: 70px;
+  padding-top: 35px;
 }
 
 .explainer .lrgImgContainer img {
-  border-radius: 18px;
+  border-radius: 20px;
 }
 
 .explainer article {
@@ -460,6 +462,10 @@ footer {
           justify-content: space-between;
   margin: 0;
   padding: 20px 10%;
+}
+
+* {
+  border: 1px solid coral;
 }
 
 body {
@@ -504,5 +510,5 @@ p {
 
 nav a, nav li {
   font-size: 1.5rem;
-  text-align: center;
+  text-align: right;
 }

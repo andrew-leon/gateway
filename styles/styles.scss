@@ -3,6 +3,10 @@
 @import 'partials/header';
 @import 'partials/main';
 
+* {
+    border: 1px solid coral;
+}
+
 body {
     color: $darkGrey;
     font-family: $bodyFont;
@@ -46,6 +50,6 @@ p {
 nav {
     a, li {
         font-size: 1.5rem;
-        text-align: center;
+        text-align: right;
     }
 }
