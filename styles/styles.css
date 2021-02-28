@@ -33,7 +33,8 @@ figure {
 }
 
 hr {
-  box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+          box-sizing: content-box;
   height: 0;
   overflow: visible;
 }
@@ -51,7 +52,8 @@ a {
 abbr[title] {
   border-bottom: none;
   text-decoration: underline;
-  text-decoration: underline dotted;
+  -webkit-text-decoration: underline dotted;
+          text-decoration: underline dotted;
 }
 
 b,
@@ -140,24 +142,24 @@ select {
 }
 
 button,
-html [type=button],
-[type=reset],
-[type=submit] {
+html [type="button"],
+[type="reset"],
+[type="submit"] {
   -webkit-appearance: button;
 }
 
 button::-moz-focus-inner,
-[type=button]::-moz-focus-inner,
-[type=reset]::-moz-focus-inner,
-[type=submit]::-moz-focus-inner {
+[type="button"]::-moz-focus-inner,
+[type="reset"]::-moz-focus-inner,
+[type="submit"]::-moz-focus-inner {
   border-style: none;
   padding: 0;
 }
 
 button:-moz-focusring,
-[type=button]:-moz-focusring,
-[type=reset]:-moz-focusring,
-[type=submit]:-moz-focusring {
+[type="button"]:-moz-focusring,
+[type="reset"]:-moz-focusring,
+[type="submit"]:-moz-focusring {
   outline: 1px dotted ButtonText;
 }
 
@@ -166,7 +168,8 @@ fieldset {
 }
 
 legend {
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   color: inherit;
   display: table;
   max-width: 100%;
@@ -183,24 +186,25 @@ textarea {
   overflow: auto;
 }
 
-[type=checkbox],
-[type=radio] {
-  box-sizing: border-box;
+[type="checkbox"],
+[type="radio"] {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   padding: 0;
 }
 
-[type=number]::-webkit-inner-spin-button,
-[type=number]::-webkit-outer-spin-button {
+[type="number"]::-webkit-inner-spin-button,
+[type="number"]::-webkit-outer-spin-button {
   height: auto;
 }
 
-[type=search] {
+[type="search"] {
   -webkit-appearance: textfield;
   outline-offset: -2px;
 }
 
-[type=search]::-webkit-search-cancel-button,
-[type=search]::-webkit-search-decoration {
+[type="search"]::-webkit-search-cancel-button,
+[type="search"]::-webkit-search-decoration {
   -webkit-appearance: none;
 }
 
@@ -240,7 +244,6 @@ template {
 }
 
 html {
-  -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
@@ -248,7 +251,8 @@ html {
 *,
 *:before,
 *:after {
-  box-sizing: inherit;
+  -webkit-box-sizing: inherit;
+          box-sizing: inherit;
 }
 
 .sr-only {
@@ -259,7 +263,8 @@ html {
   border: 0;
   padding: 0;
   white-space: nowrap;
-  clip-path: inset(100%);
+  -webkit-clip-path: inset(100%);
+          clip-path: inset(100%);
   clip: rect(0 0 0 0);
   overflow: hidden;
 }
@@ -270,69 +275,113 @@ header {
 
 nav {
   font-family: "Ubuntu", sans-serif;
+  background-color: white;
   height: 75px;
-  padding: 15px 0;
+  margin: 15px 0;
   border-bottom: 2px solid #82aaaa;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: space-between;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   margin-bottom: 50px;
-  align-items: flex-end;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
 }
-nav ul {
+
+nav .mainMenu {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-}
-nav ul li {
-  padding-left: 20px;
-}
-nav img {
-  width: 5%;
-  min-width: 50px;
-}
-nav li {
+  margin: 0;
   position: relative;
 }
-nav li .subMenu {
+
+nav .mainMenu li {
+  padding-left: 20px;
+}
+
+nav .subMenu {
   background-color: #82aaaa;
   color: white;
   line-height: 2rem;
+  width: 210px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   position: absolute;
-  overflow: hidden;
+  -webkit-transition-property: all;
+  transition-property: all;
+  -webkit-transition-duration: 0.25s;
+          transition-duration: 0.25s;
   padding: 10px;
-  top: -350px;
-  right: 0;
+  top: 28px;
+  right: -1000px;
 }
-nav .mainMenu li:hover .subMenu,
-nav .mainMenu li:active .subMenu,
-nav .mainMenu li:focus-within .subMenu {
-  height: auto;
-  top: 25px;
+
+nav img {
+  width: 7%;
+  min-width: 50px;
+  padding: 5px;
 }
+
 nav .subMenu li:hover {
   color: #075553;
+}
+
+nav .fa-chevron-left {
+  -webkit-transition: all ease-in-out 0.25s;
+  transition: all ease-in-out 0.25s;
+}
+
+nav .fa-chevron-left.active {
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+}
+
+nav input[type="checkbox"]:checked + ul {
+  right: 0;
+}
+
+nav input[type="checkbox"] {
+  display: none;
 }
 
 .introFlex {
   background: #075553;
   color: white;
   padding: 40px 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   margin-bottom: 50px;
 }
+
 .introFlex h1 {
   font-size: 4.5rem;
   line-height: 5rem;
   letter-spacing: 0.08rem;
   text-align: right;
   padding-right: 30px;
-  flex: 35%;
+  -webkit-box-flex: 35%;
+      -ms-flex: 35%;
+          flex: 35%;
 }
+
 .introFlex .introEx {
-  flex: 65%;
+  -webkit-box-flex: 65%;
+      -ms-flex: 65%;
+          flex: 65%;
   padding-left: 30px;
   border-left: 2px solid white;
 }
+
 .introFlex .introEx h2 {
   font-size: 3.5rem;
   font-style: italic;
@@ -343,6 +392,7 @@ nav .subMenu li:hover {
   border-bottom: 2px solid #82aaaa;
   margin-bottom: 50px;
 }
+
 .cardPrevCont h3 {
   font-size: 3rem;
   text-align: center;
@@ -352,48 +402,70 @@ nav .subMenu li:hover {
 
 .cardPrevList {
   padding: 0 0 25px 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: space-between;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
+
 .cardPrevList li {
   padding: 0 10px;
 }
+
 .cardPrevList li img {
   cursor: pointer;
-  box-shadow: 5px 5px 0 #82aaaa;
+  -webkit-box-shadow: 5px 5px 0 #82aaaa;
+          box-shadow: 5px 5px 0 #82aaaa;
   border-radius: 5%;
 }
+
 .cardPrevList li img:hover,
 .cardPrevList li img:focus {
-  transform: scale(1.05);
+  -webkit-transform: scale(1.05);
+          transform: scale(1.05);
 }
+
 .cardPrevList li img:active,
 .cardPrevList li img:focus {
   position: relative;
   left: 5px;
   top: 5px;
-  box-shadow: none;
+  -webkit-box-shadow: none;
+          box-shadow: none;
 }
 
 .explainer {
   margin-bottom: 70px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
 }
+
 .explainer .lrgImgContainer {
-  flex: 30%;
+  -webkit-box-flex: 30%;
+      -ms-flex: 30%;
+          flex: 30%;
   margin-right: 25px;
   padding-top: 35px;
 }
+
 .explainer .lrgImgContainer img {
   border-radius: 5%;
 }
+
 .explainer article {
   background-color: #e6e7e9;
   padding: 40px;
-  flex: 70%;
+  -webkit-box-flex: 70%;
+      -ms-flex: 70%;
+          flex: 70%;
   margin-left: 25px;
-  box-shadow: 10px 10px 0 #82aaaa;
+  -webkit-box-shadow: 10px 10px 0 #82aaaa;
+          box-shadow: 10px 10px 0 #82aaaa;
 }
+
 .explainer article h4 {
   font-size: 2.5rem;
   color: #075553;
@@ -403,26 +475,36 @@ nav .subMenu li:hover {
 footer {
   background-color: #075553;
   color: white;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: space-between;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   margin: 0;
   padding: 20px 10%;
   text-align: center;
 }
+
 footer p {
   margin: 0;
 }
+
 footer a {
   color: #e6e7e9;
-  text-decoration: underline #82aaaa;
+  -webkit-text-decoration: underline #82aaaa;
+          text-decoration: underline #82aaaa;
 }
 
 @media (max-width: 900px) {
   .introFlex {
-    flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
   }
   .introFlex h1,
-.introFlex h2 {
+  .introFlex h2 {
     text-align: center;
     padding: 0;
   }
@@ -432,6 +514,7 @@ footer a {
     border-left: none;
   }
 }
+
 @media (max-width: 768px) {
   .introFlex h1 {
     font-size: 3.5rem;
@@ -441,11 +524,9 @@ footer a {
   .introFlex .introEx h2 {
     font-size: 2.5rem;
   }
-
   .cardPrevCont h3 {
     font-size: 2.5rem;
   }
-
   .explainer {
     display: block;
   }
@@ -458,6 +539,7 @@ footer a {
     margin-left: 15px;
   }
 }
+
 @media (max-width: 667px) {
   .introFlex h1 {
     font-size: 2.5rem;
@@ -470,18 +552,17 @@ footer a {
   .introFlex p {
     text-align: center;
   }
-
   .cardPrevCont h3 {
     font-size: 1.5rem;
   }
   .cardPrevCont ul {
-    flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
   }
   .cardPrevCont ul li {
     width: 30%;
     margin-bottom: 20px;
   }
-
   .explainer .lrgImgContainer {
     width: 40%;
   }
@@ -489,11 +570,19 @@ footer a {
     font-size: 2rem;
   }
 }
+
 @media (max-width: 562px) {
   .explainer {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
   }
   .explainer .lrgImgContainer {
     float: none;
@@ -503,15 +592,14 @@ footer a {
     padding: 20px;
   }
 }
+
 @media (max-width: 414px) {
   .introFlex .introEx {
     padding: 30px 0 0;
   }
-
   .cardPrevCont ul li {
     width: 50%;
   }
-
   .explainer {
     margin-bottom: 40px;
   }
@@ -520,13 +608,16 @@ footer a {
   }
   .explainer article {
     text-align: center;
-    box-shadow: 5px 5px #82aaaa;
+    -webkit-box-shadow: 5px 5px #82aaaa;
+            box-shadow: 5px 5px #82aaaa;
   }
 }
+
 body {
   color: #58595b;
   font-family: "Roboto", sans-serif;
   font-size: 1.3rem;
+  overflow-x: hidden;
 }
 
 img {

@@ -4,53 +4,69 @@ header {
 
 nav {
     font-family: $primaryFont;
+    background-color: white;
     height: 75px;
-    padding: 15px 0;
+    margin: 15px 0;
     border-bottom: 2px solid $lightTeal;
     display: flex;
     justify-content: space-between;
     margin-bottom: 50px;
     align-items: flex-end;
+    // z-index: 20;
     
-    ul{
+    .mainMenu {
         display: flex;
+        margin: 0;
+        position: relative;
         li {
             padding-left: 20px;
         }
     }
 
-    img {
-        width: 5%;
-        min-width: 50px;
-    }
-    
-    li {
-        position: relative;
-        .subMenu {
-            background-color: $lightTeal;
-            color: white;
-            line-height: 2rem;
-            display: flex;
-            flex-direction: column;
-            position: absolute;
-            overflow: hidden;
-            padding: 10px;
-            top: -350px;
-            right: 0;
-        }
+    .subMenu {
+        background-color: $lightTeal;
+        color: white;
+        line-height: 2rem;
+        width: 210px;
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        transition-property: all;
+        transition-duration: 0.25s;
+        padding: 10px;
+        top: 28px;
+        right: -1000px;
+        // z-index: 0;
     }
 
-    .mainMenu li:hover .subMenu,
-    .mainMenu li:active .subMenu,
-	.mainMenu li:focus-within .subMenu {
-		height: auto;
-        top: 25px;
-	}
+    img {
+        width: 7%;
+        min-width: 50px;
+        padding: 5px;
+    }
+    
 
     .subMenu li:hover {
         color: $gatewayTeal;
     }
+    
+    .fa-chevron-left {
+        transition: all ease-in-out 0.25s;
+        &.active {
+            transform: rotate(180deg);
+        }
+    }
+
+    input[type="checkbox"]:checked + ul{
+        right: 0;
+    }
+    
+    input[type="checkbox"]{
+        display: none;
+    }
+
 }
+
 
 .introFlex {
     background: $gatewayTeal;
@@ -58,6 +74,7 @@ nav {
     padding: 40px 20px;
     display: flex;
     margin-bottom: 50px;
+
     h1{
         font-size: 4.5rem;
         line-height: 5rem;

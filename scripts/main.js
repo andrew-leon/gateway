@@ -53,6 +53,8 @@ gateway.initData = () => {
 
   // <ul class="cardPrevList"> (see HTML)
   gateway.cardPrevList = document.querySelector(".cardPrevList");
+
+  gateway.chevron = document.querySelector('.fa-chevron-left');
 };
 
 // initializes all functions; called in gateway.init()
@@ -255,6 +257,11 @@ gateway.init = () => {
       section.scrollIntoView({ behavior: "smooth" });
     }
   });
+
+  gateway.chevron.addEventListener('click', () => {
+    gateway.chevron.classList.toggle('active');
+  });
+
 };
 
 gateway.init();
