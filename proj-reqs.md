@@ -24,6 +24,14 @@ You will also be given a general mark on how well you adhere to best practices m
 - [X] Errors are handled effectively
 
 ### Outstanding
-- [ ] Site is responsive and uses media queries
+
 - [ ] App and interactions are accessible
+- [ ] Site is responsive and uses media queries
 - [ ] Site is live on GH Pages, Netlify, or student’s own 
+
+### Stretch Goals
+
+- [ ] Replace lorem text with real text
+- [ ] Explain The Stack(tm)
+- [ ] Showcase sample board state
+- [ ] Create FAQ for random things (e.g. flash, split-second, tribal)
