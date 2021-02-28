@@ -157,6 +157,7 @@ gateway.initFuncs = () => {
     const prevImage = document.createElement('img');
     prevImage.src = card.image;
 
+    // does "type" start with a vowel?
     const typeVowelStart =
       type == "Artifact" ||
       type == "Enchantment" ||
