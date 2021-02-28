@@ -269,6 +269,10 @@ html {
   overflow: hidden;
 }
 
+header {
+  padding-top: 20px;
+}
+
 nav {
   font-family: "Ubuntu", sans-serif;
   height: 75px;

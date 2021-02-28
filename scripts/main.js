@@ -156,10 +156,16 @@ gateway.initFuncs = () => {
     // create "preview" image (for "pick a card" section)
     const prevImage = document.createElement('img');
     prevImage.src = card.image;
-    prevImage.alt = `${card.name}: ${card.type}`;
+    let indefArticle = "a";
+    if (type == "Artifact" || type == "Enchantment" || type == "Instant") {
+      indefArticle = "an";
+    };
+
+    prevImage.alt = `${card.name}: a preview of ${indefArticle} ${type} card`;
 
     // create "main" image (for explanation section)
     const mainImage = prevImage.cloneNode(true);
+    mainImage.alt = `${card.name}: an example of ${indefArticle} ${type} card`;
 
     prevImage.classList.add(id);
 
