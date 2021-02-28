@@ -11,6 +11,7 @@
 - [X] Modern ES6 variable declarations used (let, const)
 - [X] GitHub repo has more than one significant commit from each studentURL
 - [X] Naming convention throughout HTML & CSS is consistent (ie. kabob-case) or follows a known pattern (ie. BEM)
+- [X] Site is live on GH Pages, Netlify, or student’s own 
 
 You will also be given a general mark on how well you adhere to best practices mentioned in class. Best practices include but may not be limited to:
 
@@ -22,12 +23,11 @@ You will also be given a general mark on how well you adhere to best practices m
 - [X] ID selectors should not be used to style elements
 - [X] Sass selectors should not be nested more than 3 levels deep
 - [X] Errors are handled effectively
+- [X] App and interactions are accessible
 
 ### Outstanding
 
-- [ ] App and interactions are accessible
 - [ ] Site is responsive and uses media queries
-- [ ] Site is live on GH Pages, Netlify, or student’s own 
 
 ### Stretch Goals
 
