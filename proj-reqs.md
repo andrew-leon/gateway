@@ -28,7 +28,7 @@ You will also be given a general mark on how well you adhere to best practices m
 
 ### Outstanding
 
-- [ ] Replace lorem text with real text
+- [X] Replace lorem text with real text
 
 ### Stretch Goals
 
