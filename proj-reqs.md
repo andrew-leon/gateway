@@ -24,14 +24,15 @@ You will also be given a general mark on how well you adhere to best practices m
 - [X] Sass selectors should not be nested more than 3 levels deep
 - [X] Errors are handled effectively
 - [X] App and interactions are accessible
+- [X] Site is responsive and uses media queries
 
 ### Outstanding
 
-- [ ] Site is responsive and uses media queries
+- [ ] Add actual links to card previews
+- [ ] Replace lorem text with real text
 
 ### Stretch Goals
 
-- [ ] Replace lorem text with real text
 - [ ] Explain The Stack(tm)
 - [ ] Showcase sample board state
 - [ ] Create FAQ for random things (e.g. flash, split-second, tribal)
