@@ -347,6 +347,12 @@ nav input[type=checkbox] {
   font-size: 3.5rem;
   font-style: italic;
 }
+.introFlex .introEx ul {
+  list-style: square;
+}
+.introFlex .introEx strong {
+  color: #82aaaa;
+}
 
 .cardPrevCont {
   border-top: 2px solid #82aaaa;

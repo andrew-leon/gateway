@@ -90,5 +90,11 @@ nav {
             font-size: 3.5rem;
             font-style: italic;
         }
+        ul {
+            list-style: square;
+        }
+        strong {
+            color: $lightTeal;
+        }
     }
 }
