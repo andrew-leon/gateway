@@ -266,6 +266,7 @@ html {
 
 header {
   padding-top: 20px;
+  overflow-x: hidden;
 }
 
 nav {
@@ -537,7 +538,6 @@ body {
   background: white;
   font-family: "Roboto", sans-serif;
   font-size: 1.3rem;
-  overflow-x: hidden;
 }
 
 img {

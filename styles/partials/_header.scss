@@ -1,5 +1,6 @@
 header {
     padding-top: 20px;
+    overflow-x: hidden;
 }
 
 nav {
@@ -12,7 +13,6 @@ nav {
     justify-content: space-between;
     margin-bottom: 50px;
     align-items: flex-end;
-    // z-index: 20;
     
     .mainMenu {
         display: flex;
@@ -36,7 +36,6 @@ nav {
         padding: 10px;
         top: 28px;
         right: -1000px;
-        // z-index: 0;
     }
 
     img {
