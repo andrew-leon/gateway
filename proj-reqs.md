@@ -25,10 +25,10 @@ You will also be given a general mark on how well you adhere to best practices m
 - [X] Errors are handled effectively
 - [X] App and interactions are accessible
 - [X] Site is responsive and uses media queries
+- [X] Replace lorem text with real text
 
 ### Outstanding
 
-- [X] Replace lorem text with real text
 
 ### Stretch Goals
 
