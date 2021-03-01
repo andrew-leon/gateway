@@ -38,23 +38,30 @@ gateway.initData = () => {
     spell
   ];
 
+  // array of promises; populated at runtime
+  gateway.promises = [];
+
   // dictionary of card objects; populated at runtime
-  /* Anatomy of a card object:
+  gateway.cards = {};
+  /* example card object (this one would be at gateway.cards.Creature):
   {
     name: "Squee, the Immortal"
     type: "Legendary Creature — Goblin"
     image:  "https://c1.scryfall.com/file/scryfall-cards/normal/front/a/3/a3974c62-a524-454e-9ce7-2c23b704e5cb.jpg?1562740600"
   }
   */
-  gateway.cards = {};
 
   // API endpoint
   gateway.url = new URL("https://api.scryfall.com/cards/random");
 
-  // <ul class="cardPrevList"> (see HTML)
-  gateway.cardPrevList = document.querySelector(".cardPrevList");
+  // selector cache
+  gateway.selCache = {
+    // card preview list
+    cardPrevList: document.querySelector(".cardPrevList"),
 
-  gateway.chevron = document.querySelector('.fa-chevron-left');
+    // dropdown icon
+    chevron: document.querySelector('.fa-chevron-left')
+  }
 };
 
 // initializes all functions; called in gateway.init()
@@ -142,53 +149,52 @@ gateway.initFuncs = () => {
 
   /**
    * @function gateway.displayCard()
-   * Dynamically generates an html representation of an MTG card, using
-   * the card's name and type line for the alt text.
+   * Dynamically generates an html representation of an MTG card, generating 
+   * alt text from card name and type
    * @param {object} type A specified type from gateway.cardTypes[]
    */
   gateway.displayCard = (type) => {
 
-    // replace "Instant" and "Sorcery" types with "Spell" to match section id
-    const id = (type == "Instant" || type == "Sorcery")
-      ? "Spell"
-      : type;
+    // is type a "spell"? (in the colloquial sense)
+    const typeIsSpell = 
+      type == "Instant" || 
+      type == "Sorcery";
 
-    const card = gateway.cards[type];
-
-    // create "preview" image (for "pick a card" section)
-    const prevImage = document.createElement('img');
-    prevImage.src = card.image;
-
+    // match "Instant" & "Sorcery" types to section id "Spell"
+    const id = typeIsSpell ? "Spell" : type;
+    
     // does "type" start with a vowel?
     const typeVowelStart =
       type == "Artifact" ||
       type == "Enchantment" ||
       type == "Instant";
     
+    // match indefinite article for grammatical correctness
     const indefArticle = typeVowelStart ? "an" : "a";
 
-    prevImage.alt = `${card.name}: a preview of ${indefArticle} ${type} card`;
+    const card = gateway.cards[type];
 
-    // create "main" image (for explanation section)
-    const mainImage = prevImage.cloneNode(true);
+    // display "preview" image ("pick a card" section)
+    const prevImage = document.createElement('img');
+
+    prevImage.src = card.image;
+    prevImage.alt = `preview of ${card.name}: ${indefArticle} ${type} card`;
+
+    // display "main" image ("explain" sections)
+    const mainImage = document.createElement('img');
+    mainImage.src = card.image;
     mainImage.alt = `${card.name}: an example of ${indefArticle} ${type} card`;
 
     prevImage.classList.add(id);
 
-    // const anchor = document.createElement('a');
-    // anchor.href = '#'+type;
-    // anchor.appendChild(prevImage);
-
     const li = document.createElement('li');
-    // li.appendChild(anchor);
     li.appendChild(prevImage);
 
     const list = document.querySelector(".cardPrevList");
 
     list.appendChild(li);
 
-
-    // finds the image container in the relevant article
+    // query image container in matching article
     const imgContainer = document.querySelector(`#${id} .lrgImgContainer`);
 
     imgContainer.appendChild(mainImage);
@@ -206,20 +212,18 @@ gateway.init = () => {
     1. shove promises in an array 
     2. do Promise.all(array)
   */
-  // empty promises array
-  gateway.promises = [];
 
   // populates promise array with API responses (converted to json)
   for (let type, i = 0; i < gateway.cardTypes.length; i++) {
     type = gateway.cardTypes[i];
 
     // ensures that promises are inserted into array in specific order
+    // (specifically lands at 0, creatures at 1, artifacts at 2, etc)
     gateway.promises[i] = gateway.fetchRandomCard(type);
   }
 
-  // go through promises in order, 
-  // resolve the data, 
-  // convert to simplified object representation (see gateway.cards)
+  // resolve promises and convert data to card object 
+  // (see gateway.cards comment)
   Promise.all(gateway.promises).then(cardsArray => {
 
     for (let type, card, i = 0; i < cardsArray.length; i++) {
@@ -243,7 +247,11 @@ gateway.init = () => {
     }
   }).catch(error => console.error(error.message));
 
-  gateway.cardPrevList.addEventListener('click', (event) => {
+  // Event Listeners
+
+  // adds scrolling behaviour
+  gateway.selCache.cardPrevList.addEventListener('click', (event) => {
+
     // check if event.target is an image
     if (event.target.tagName == "IMG") {
 
@@ -258,8 +266,8 @@ gateway.init = () => {
     }
   });
 
-  gateway.chevron.addEventListener('click', () => {
-    gateway.chevron.classList.toggle('active');
+  gateway.selCache.chevron.addEventListener('click', (event) => {
+    event.target.classList.toggle('active');
   });
 
 };

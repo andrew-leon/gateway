@@ -28,7 +28,6 @@ You will also be given a general mark on how well you adhere to best practices m
 
 ### Outstanding
 
-- [ ] Add actual links to card previews
 - [ ] Replace lorem text with real text
 
 ### Stretch Goals
