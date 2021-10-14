@@ -24,7 +24,6 @@ const gateway = {};
 
 // initializes all data; called in gateway.init()
 gateway.initData = () => {
-
   // randomly resolves to "Instant" or "Sorcery" on page-load
   const spell = gateway.randPick("Instant", "Sorcery");
 
@@ -35,7 +34,7 @@ gateway.initData = () => {
     "Artifact",
     "Enchantment",
     "Planeswalker",
-    spell
+    spell,
   ];
 
   // array of promises; populated at runtime
@@ -60,18 +59,17 @@ gateway.initData = () => {
     cardPrevList: document.querySelector(".cardPrevList"),
 
     // dropdown icon
-    chevron: document.querySelector('.fa-chevron-left')
-  }
+    chevron: document.querySelector(".fa-chevron-left"),
+  };
 };
 
 // initializes all functions; called in gateway.init()
 gateway.initFuncs = () => {
-
   /**
    * @function gateway.buildFilterQuery()
    * Generates a query string for a given card type (e.g. "Land").
-   * The query string is formatted using Scryfall's advanced search syntax 
-   * (https://scryfall.com/docs/syntax) to filter the random card request 
+   * The query string is formatted using Scryfall's advanced search syntax
+   * (https://scryfall.com/docs/syntax) to filter the random card request
    * in the following ways:
    *
    *  - only cards matching the given card type, and no other type
@@ -82,7 +80,6 @@ gateway.initFuncs = () => {
    * @return A formated query string
    */
   gateway.buildFilterQuery = (type) => {
-
     // include only cards with given type, e.g. "t:land"
     let query = `t:${type.toLowerCase()} `;
 
@@ -115,79 +112,71 @@ gateway.initFuncs = () => {
    * @return Any of the arguments, with equal probability
    */
   gateway.randPick = (...args) => {
-
     const randInt = Math.floor(Math.random() * args.length);
     return args[randInt];
   };
 
   /**
    * @function gateway.fetchRandomCard()
-   * Fetches a random card of the specified type, and writes it to 
+   * Fetches a random card of the specified type, and writes it to
    * the gateway.cards object.
    * @param {string} type A specified type from gateway.cardTypes[]
-   * @return A promise which resolves to a JSON representation of a 
+   * @return A promise which resolves to a JSON representation of a
    * card of the specified type.
    */
   gateway.fetchRandomCard = async (type) => {
-
     gateway.url.search = new URLSearchParams({
       // generate request parameter from type
       q: gateway.buildFilterQuery(type),
     });
 
-    const promiseData = await fetch(gateway.url)
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error('Network response was not ok');
-        }
-      });
+    const promiseData = await fetch(gateway.url).then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error("Network response was not ok");
+      }
+    });
 
     return promiseData;
   };
 
   /**
    * @function gateway.displayCard()
-   * Dynamically generates an html representation of an MTG card, generating 
+   * Dynamically generates an html representation of an MTG card, generating
    * alt text from card name and type
    * @param {object} type A specified type from gateway.cardTypes[]
    */
   gateway.displayCard = (type) => {
-
     // is type a "spell"? (in the colloquial sense)
-    const typeIsSpell = 
-      type == "Instant" || 
-      type == "Sorcery";
+    const typeIsSpell = type == "Instant" || type == "Sorcery";
 
     // match "Instant" & "Sorcery" types to section id "Spell"
     const id = typeIsSpell ? "Spell" : type;
-    
+
     // does "type" start with a vowel?
     const typeVowelStart =
-      type == "Artifact" ||
-      type == "Enchantment" ||
-      type == "Instant";
-    
+      type == "Artifact" || type == "Enchantment" || type == "Instant";
+
     // match indefinite article for grammatical correctness
     const indefArticle = typeVowelStart ? "an" : "a";
 
     const card = gateway.cards[type];
 
     // display "preview" image ("pick a card" section)
-    const prevImage = document.createElement('img');
+    const prevImage = document.createElement("img");
 
     prevImage.src = card.image;
     prevImage.alt = `preview of ${card.name}: ${indefArticle} ${type} card`;
 
     // display "main" image ("explain" sections)
-    const mainImage = document.createElement('img');
+    const mainImage = document.createElement("img");
     mainImage.src = card.image;
     mainImage.alt = `${card.name}: an example of ${indefArticle} ${type} card`;
 
     prevImage.classList.add(id);
 
-    const li = document.createElement('li');
+    const li = document.createElement("li");
     li.appendChild(prevImage);
 
     const list = document.querySelector(".cardPrevList");
@@ -198,7 +187,7 @@ gateway.initFuncs = () => {
     const imgContainer = document.querySelector(`#${id} .lrgImgContainer`);
 
     imgContainer.appendChild(mainImage);
-  }
+  };
 };
 
 // main init function
@@ -222,54 +211,51 @@ gateway.init = () => {
     gateway.promises[i] = gateway.fetchRandomCard(type);
   }
 
-  // resolve promises and convert data to card object 
+  // resolve promises and convert data to card object
   // (see gateway.cards comment)
-  Promise.all(gateway.promises).then(cardsArray => {
+  Promise.all(gateway.promises)
+    .then((cardsArray) => {
+      for (let type, card, i = 0; i < cardsArray.length; i++) {
+        // the card we're currently on
+        card = cardsArray[i];
 
-    for (let type, card, i = 0; i < cardsArray.length; i++) {
+        // the type that this card should be
+        // guaranteed by specific ordering of gateway.promises
+        type = gateway.cardTypes[i];
 
-      // the card we're currently on
-      card = cardsArray[i];
+        // e.g. gateway.cards["Land"]
+        gateway.cards[type] = {
+          name: card.name,
+          type: card.type_line,
+          image: card.image_uris.normal,
+        };
 
-      // the type that this card should be
-      // guaranteed by specific ordering of gateway.promises
-      type = gateway.cardTypes[i];
-
-      // e.g. gateway.cards["Land"]
-      gateway.cards[type] = {
-        name: card.name,
-        type: card.type_line,
-        image: card.image_uris.normal
-      };
-
-      // display card (in order of type: land, then creature, etc)
-      gateway.displayCard(type);
-    }
-  }).catch(error => console.error(error.message));
+        // display card (in order of type: land, then creature, etc)
+        gateway.displayCard(type);
+      }
+    })
+    .catch((error) => console.error(error.message));
 
   // Event Listeners
 
   // adds scrolling behaviour
-  gateway.selCache.cardPrevList.addEventListener('click', (event) => {
-
+  gateway.selCache.cardPrevList.addEventListener("click", (event) => {
     // check if event.target is an image
     if (event.target.tagName == "IMG") {
-
       // get type (from img class)
       const type = event.target.className;
 
       // get target section to scroll to
-      const section = document.querySelector('#' + type);
+      const section = document.querySelector("#" + type);
 
       // scroll to section
       section.scrollIntoView({ behavior: "smooth" });
     }
   });
 
-  gateway.selCache.chevron.addEventListener('click', (event) => {
-    event.target.classList.toggle('active');
+  gateway.selCache.chevron.addEventListener("click", (event) => {
+    event.target.classList.toggle("active");
   });
-
 };
 
 gateway.init();

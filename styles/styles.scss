@@ -1,53 +1,54 @@
-@import 'partials/setup';
-@import 'partials/variables';
-@import 'partials/header';
-@import 'partials/main';
-@import 'partials/responsive';
+@import "partials/setup";
+@import "partials/variables";
+@import "partials/header";
+@import "partials/main";
+@import "partials/responsive";
 
 body {
-    color: $darkGrey;
-    background: white;
-    font-family: $bodyFont;
-    font-size: 1.3rem;   
+  color: $darkGrey;
+  background: white;
+  font-family: $bodyFont;
+  font-size: 1.3rem;
 }
 
 img {
-    max-width: 100%;
-    height: auto;
+  max-width: 100%;
+  height: auto;
 }
 
 ul {
-    list-style: none;
-    padding: none;
-    margin: none;
+  list-style: none;
+  padding: none;
+  margin: none;
 }
 
 a {
-    text-decoration: none;
-    color: inherit;
+  text-decoration: none;
+  color: inherit;
 }
 
 .wrapper {
-    margin: 0 auto;
-    width: 90%;
-    max-width: 1200px;
+  margin: 0 auto;
+  width: 90%;
+  max-width: 1200px;
 }
 
 h1,
 h2,
 h3,
 h4 {
-    font-family: $primaryFont;
-    margin: 0 auto;
+  font-family: $primaryFont;
+  margin: 0 auto;
 }
 
 p {
-    line-height: 1.8rem;
+  line-height: 1.8rem;
 }
 
 nav {
-    a, li {
-        font-size: 1.5rem;
-        text-align: right;
-    }
+  a,
+  li {
+    font-size: 1.5rem;
+    text-align: right;
+  }
 }

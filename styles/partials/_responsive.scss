@@ -1,128 +1,128 @@
-@media(max-width:$smallDesktop){
-    .introFlex {
-        flex-direction: column;
-        h1,
-        h2 {
-            text-align: center;
-            padding: 0;
-        }
-        .introEx {
-            padding: 30px;
-            border-top: 2px solid white;
-            border-left: none;
-        }
+@media (max-width: $smallDesktop) {
+  .introFlex {
+    flex-direction: column;
+    h1,
+    h2 {
+      text-align: center;
+      padding: 0;
     }
+    .introEx {
+      padding: 30px;
+      border-top: 2px solid white;
+      border-left: none;
+    }
+  }
 }
 
-@media(max-width:$tabletVertical) {
-    .introFlex {
-        h1 {
-            font-size: 3.5rem;
-            line-height: 4rem;
-            padding-bottom: 15px;
-        }
-        .introEx h2 {
-            font-size: 2.5rem;
-        }
+@media (max-width: $tabletVertical) {
+  .introFlex {
+    h1 {
+      font-size: 3.5rem;
+      line-height: 4rem;
+      padding-bottom: 15px;
+    }
+    .introEx h2 {
+      font-size: 2.5rem;
+    }
+  }
+
+  .cardPrevCont {
+    h3 {
+      font-size: 2.5rem;
+    }
+  }
+
+  .explainer {
+    display: block;
+
+    article {
+      margin-left: 0;
     }
 
-    .cardPrevCont {
-        h3 {
-            font-size: 2.5rem;
-        }
+    .lrgImgContainer {
+      width: 35%;
+      float: right;
+      margin-left: 15px;
     }
-    
-    .explainer {
-        display: block;
-        
-        article {
-            margin-left: 0;
-        }
-
-        .lrgImgContainer {
-            width: 35%;
-            float: right;
-            margin-left: 15px;
-        }
-    }
+  }
 }
 
-@media(max-width:$mobileHorizontal) {
-    .introFlex {
-        h1 {
-            font-size: 2.5rem;
-            line-height: 2.5rem;
-            padding-bottom: 15px;
-        }
-        .introEx h2 {
-            font-size: 1.8rem;
-        }
-        p {
-            text-align: center;
-        }
+@media (max-width: $mobileHorizontal) {
+  .introFlex {
+    h1 {
+      font-size: 2.5rem;
+      line-height: 2.5rem;
+      padding-bottom: 15px;
     }
+    .introEx h2 {
+      font-size: 1.8rem;
+    }
+    p {
+      text-align: center;
+    }
+  }
 
-    .cardPrevCont {
-        h3 {
-            font-size: 1.5rem;
-        }
-        ul {
-            flex-wrap: wrap;
-            li {
-                width: 30%;
-                margin-bottom: 20px;
-            }
-        }
+  .cardPrevCont {
+    h3 {
+      font-size: 1.5rem;
     }
+    ul {
+      flex-wrap: wrap;
+      li {
+        width: 30%;
+        margin-bottom: 20px;
+      }
+    }
+  }
 
-    .explainer {
-        .lrgImgContainer {
-            width: 40%;
-        }
-        article h4 {
-            font-size: 2rem;
-        }
+  .explainer {
+    .lrgImgContainer {
+      width: 40%;
     }
+    article h4 {
+      font-size: 2rem;
+    }
+  }
 }
 
-@media(max-width:562px) {
-    .explainer {
-        display: flex;
-        flex-direction: column;
+@media (max-width: 562px) {
+  .explainer {
+    display: flex;
+    flex-direction: column;
 
-        align-items: center;
-        
-        .lrgImgContainer {
-            float: none;
-            width: 50%;
-        }
+    align-items: center;
 
-        article {
-            padding: 20px;
-        }
+    .lrgImgContainer {
+      float: none;
+      width: 50%;
     }
+
+    article {
+      padding: 20px;
+    }
+  }
 }
 
-@media(max-width:$mobileVertical) {
-    .introFlex {
-        .introEx {
-            padding: 30px 0 0;
-        }
+@media (max-width: $mobileVertical) {
+  .introFlex {
+    .introEx {
+      padding: 30px 0 0;
     }
+  }
 
-    .cardPrevCont ul li {
-        width: 50%;
+  .cardPrevCont ul li {
+    width: 50%;
+  }
+
+  .explainer {
+    margin-bottom: 40px;
+
+    .lrgImgContainer {
+      width: 65%;
     }
-
-    .explainer {
-        margin-bottom: 40px;
-
-        .lrgImgContainer {
-            width: 65%;
-        }
-        article {
-            text-align: center;
-            box-shadow: 5px 5px $lightTeal;
-        }
+    article {
+      text-align: center;
+      box-shadow: 5px 5px $lightTeal;
     }
+  }
 }
